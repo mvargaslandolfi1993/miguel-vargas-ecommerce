@@ -14,8 +14,10 @@ class CreateCategoriaProductoTable extends Migration
     public function up()
     {
         Schema::create('categoria_producto', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->unsignedBigInteger('idCategoria')->nullable();
+            $table->unsignedBigInteger('idProducto')->nullable();
+            $table->foreign('idCategoria')->references('idCategoria')->on('categorias')->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreign('idProducto')->references('idProducto')->on('productos')->onDelete('RESTRICT')->onUpdate('CASCADE');
         });
     }
 

@@ -14,7 +14,14 @@ class CreateProductosTable extends Migration
     public function up()
     {
         Schema::create('productos', function (Blueprint $table) {
-            $table->id();
+            $table->engine = 'InnoDB';
+            $table->bigIncrements('idProducto');
+            $table->unsignedBigInteger('idVendedor')->nullable();
+            $table->string('nombre');
+            $table->string('descripcion');
+            $table->integer('cantidad');
+            $table->enum('Estado', ['ACTIVO', 'INACTIVO'])->default('ACTIVO');
+            $table->foreign('idVendedor')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->timestamps();
         });
     }

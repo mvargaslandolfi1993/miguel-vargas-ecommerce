@@ -14,7 +14,13 @@ class CreateTransaccionesTable extends Migration
     public function up()
     {
         Schema::create('transacciones', function (Blueprint $table) {
-            $table->id();
+            $table->engine = 'InnoDB';
+            $table->bigIncrements('idTransaccion');
+            $table->unsignedBigInteger('idComprador')->nullable();
+            $table->unsignedBigInteger('idProducto')->nullable();
+            $table->integer('cantidad');
+            $table->foreign('idComprador')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreign('idProducto')->references('idProducto')->on('productos')->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->timestamps();
         });
     }
