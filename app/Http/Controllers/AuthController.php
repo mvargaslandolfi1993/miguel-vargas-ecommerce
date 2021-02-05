@@ -26,27 +26,25 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     protected function register(Request $request){
-        $data= $request->only('name','email','password');
+        $data = $request->only('name','email','password');
 
-        $validator=Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
+        $validator = Validator::make($data, [
+            'name'      => ['required', 'string', 'max:255'],
+            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'  => ['required', 'string', 'min:8'],
         ]);
         
         if ($validator->fails()) {
             return response()->json(['error' => $validator->messages()],422);
         }
 
-        $user=User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        $user = User::create([
+            'name'      => $data['name'],
+            'email'     => $data['email'],
+            'password'  => Hash::make($data['password']),
         ]);
 
-        return $user->exists 
-                    ?   response()->json(['message' => 'El usuario '.$user->email.' se creó.'],201)
-                    :   response()->json(['error' => 'El usuario no se pudo crear.'],500);
+        return $user->exists ? response()->json(['message' => 'El usuario '.$user->email.' se creó.'],201) : response()->json(['error' => 'El usuario no se pudo crear.'],500);
         
 
     }
@@ -61,8 +59,22 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
+        $validator = Validator::make($credentials, [
+            'email'     => ['required', 'string'],
+            'password'  => ['required', 'string', 'min:8'],
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->messages()],422);
+        }
         if ($token = $this->guard()->attempt($credentials)) {
             return $this->respondWithToken($token);
+        }else{
+            return response([                   
+                'status'    => 'error',                    
+                'error'     => 'invalid.credentials',                   
+                'msg'       => 'Credenciales Invalidas.'             
+            ], 400);
         }
 
         return response()->json(['error' => 'Unauthorized'], 401);
