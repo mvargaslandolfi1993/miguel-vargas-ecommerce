@@ -22,7 +22,7 @@ class TransaccionFactory extends Factory
     public function definition()
     {
         return [
-        'cantidad'  => rand(1, 10)
+        'cantidad'  => rand(1, 5)
     ];
     }
 }

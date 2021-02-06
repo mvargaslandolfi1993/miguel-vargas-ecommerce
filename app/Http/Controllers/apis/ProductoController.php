@@ -95,6 +95,8 @@ class ProductoController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->authorize('update', Producto::class);
+        
         $response = [
             "error"     => false,
             "errores"   => [],
@@ -102,7 +104,7 @@ class ProductoController extends Controller
         ];
 
         $producto = Producto::find($id);
-
+        
         if (is_null($producto)) {
             $response['error'] = true;
             $response['errores'] = "El id del producto ingresado no concuerda con nuestros registros";
@@ -113,7 +115,14 @@ class ProductoController extends Controller
                 $response['errores']  = "La cantidad del producto no puede ser menor o igual a 0";
                 return response()->json($response, 422);
             }
-            
+
+            $userExists = User::where("id", $request->idVendedor)->where('admin', 1)->exists();
+            if (!is_null($request->idVendedor) && !$userExists) {
+                $response['error'] = true;
+                $response['errores']  = "El Vendedor no concuerda con nuestros registros!";
+                return response()->json($response,422);
+            }
+
             $values = [
                 "idVendedor"  => $request->idVendedor ? $request->idVendedor : $producto->idVendedor,
                 "nombre"      => $request->nombre ? $request->nombre : $producto->nombre,

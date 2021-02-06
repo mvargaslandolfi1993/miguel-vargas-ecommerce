@@ -18,7 +18,7 @@ class ProductoCollection extends JsonResource
     {
         return [
             'idProducto'    => $this->idProducto,
-            'idVendedor'    => $this->when(Auth::user()->admin, 'idVendedor'),
+            'idVendedor'    => $this->when(Auth::user()->admin, Auth::id()),
             'nombre'        => $this->nombre,
             'descripcion'   => $this->descripcion,
             'cantidad'      => $this->cantidad,
