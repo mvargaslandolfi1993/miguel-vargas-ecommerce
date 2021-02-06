@@ -36,6 +36,6 @@ Route::get('/get/producto/{id}', [App\Http\Controllers\apis\ProductoController::
 //solo vendedores
 Route::group(['middleware' => ['api', 'auth.role:1']], function(){
 	Route::post('/create/producto', [App\Http\Controllers\apis\ProductoController::class, 'create']);
-	Route::post('/update/producto', [App\Http\Controllers\apis\ProductoController::class, 'update']);
-	Route::post('/delete/producto', [App\Http\Controllers\apis\ProductoController::class, 'delete']);
+	Route::post('/update/producto/{id}', [App\Http\Controllers\apis\ProductoController::class, 'update']);
+	Route::post('/delete/producto/{id}', [App\Http\Controllers\apis\ProductoController::class, 'delete']);
 });

@@ -17,7 +17,7 @@ class CreateCategoriaProductoTable extends Migration
             $table->unsignedBigInteger('idCategoria')->nullable();
             $table->unsignedBigInteger('idProducto')->nullable();
             $table->foreign('idCategoria')->references('idCategoria')->on('categorias')->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->foreign('idProducto')->references('idProducto')->on('productos')->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreign('idProducto')->references('idProducto')->on('productos')->onDelete('CASCADE')->onUpdate('CASCADE');
         });
     }
 

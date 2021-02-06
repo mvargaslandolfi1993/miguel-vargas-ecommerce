@@ -19,8 +19,8 @@ class CreateTransaccionesTable extends Migration
             $table->unsignedBigInteger('idComprador')->nullable();
             $table->unsignedBigInteger('idProducto')->nullable();
             $table->integer('cantidad');
-            $table->foreign('idComprador')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->foreign('idProducto')->references('idProducto')->on('productos')->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreign('idComprador')->references('id')->on('users')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->foreign('idProducto')->references('idProducto')->on('productos')->onDelete('CASCADE')->onUpdate('CASCADE');
             $table->timestamps();
         });
     }

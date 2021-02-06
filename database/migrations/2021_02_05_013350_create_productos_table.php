@@ -16,9 +16,9 @@ class CreateProductosTable extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->bigIncrements('idProducto');
-            $table->unsignedBigInteger('idVendedor')->nullable();
+            $table->unsignedBigInteger('idVendedor');
             $table->string('nombre');
-            $table->string('descripcion');
+            $table->string('descripcion')->nullable();
             $table->integer('cantidad');
             $table->enum('estado', ['ACTIVO', 'INACTIVO'])->default('ACTIVO');
             $table->foreign('idVendedor')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('CASCADE');
