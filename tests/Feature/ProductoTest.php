@@ -36,7 +36,7 @@ class ProductoTest extends TestCase
         $response->assertSuccessful();
     }
 
-    public function test_can_update_producto_usuario_cliente()
+    public function test_cannot_update_producto_usuario_cliente()
     {
         $user = User::where('admin', 0)->first();
         $token = $this->json('POST', '/api/auth/login', ['email' => $user->email, 'password' => '12345678']);

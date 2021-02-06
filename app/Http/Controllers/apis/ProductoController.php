@@ -22,18 +22,18 @@ class ProductoController extends Controller
         return ProductoCollection::collection(Producto::where('idProducto', $id)->get());
     }
 
-    /*
-        Estructura Json para crear productos
-         {
-            "nombre": "Zapato",
-            "cantidad" : 2,
-            "idVendedor" : 1,
-            "idCategoria" : 1,
-            "descripcion" : "Opcional"
-        }
-    */
     public function create(Request $request)
     {
+        /*
+            Estructura Json para crear productos
+             {
+                "nombre": "Zapato",
+                "cantidad" : 2,
+                "idVendedor" : 1,
+                "idCategoria" : 1,
+                "descripcion" : "Opcional"
+            }
+        */
         $response = [
             "error"     => false,
             "errores"   => [],
