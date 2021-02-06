@@ -28,3 +28,14 @@ Route::group([
     Route::post('register',[AuthController::class,'register'])->name('auth.register');
 
 });
+//clientes
+Route::get('/get/productos', [App\Http\Controllers\apis\ProductoController::class, 'getProductos'])->middleware('api', 'auth.role:1,0');
+
+Route::get('/get/producto/{id}', [App\Http\Controllers\apis\ProductoController::class, 'getProducto'])->middleware('api', 'auth.role:1,0');
+
+//solo vendedores
+Route::group(['middleware' => ['api', 'auth.role:1']], function(){
+	Route::post('/create/producto', [App\Http\Controllers\apis\ProductoController::class, 'create']);
+	Route::post('/update/producto', [App\Http\Controllers\apis\ProductoController::class, 'update']);
+	Route::post('/delete/producto', [App\Http\Controllers\apis\ProductoController::class, 'delete']);
+});

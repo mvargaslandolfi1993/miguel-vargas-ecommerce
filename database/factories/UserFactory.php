@@ -29,8 +29,8 @@ class UserFactory extends Factory
             'password'          => Hash::make("12345678"), // password
             'remember_token'    => Str::random(10),
             'verificado'        => 1,
-            'verificacion_token'  => 1,
-            'admin'             => 1,
+            'verificacion_token'=> 1,
+            'admin'             => false,
         ];
     }
 }
